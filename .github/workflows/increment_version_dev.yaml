@@ -24,7 +24,7 @@ jobs:
       - name: Increment versions in pyproject.toml
         run: |
           set -x
-          
+
           echo "Incrementing versions..."
           find . -name "pyproject.toml" | while read -r pyproject; do
               echo "Processing $pyproject"
@@ -56,6 +56,7 @@ jobs:
               BASE_VERSION=$(echo "$CURRENT_VERSION" | sed -E 's/(.*)-dev.*/\1/')
               DEV_PART=$(echo "$CURRENT_VERSION" | grep -oE 'dev[0-9]+$' | grep -oE '[0-9]+')
           
+              # Fallback if no DEV_PART is found
               if [ -z "$DEV_PART" ]; then
                   DEV_PART=0
               fi
@@ -65,6 +66,7 @@ jobs:
           
               echo "Updating version from $CURRENT_VERSION to $NEW_VERSION"
           done
+
 
 
 
